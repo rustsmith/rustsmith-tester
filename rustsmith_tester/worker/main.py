@@ -29,10 +29,14 @@ while True:
         command = "rustc -C opt-level={} temp.rs -o out".format(flag)
         result = subprocess.run(command.split(" "), stdout=subprocess.DEVNULL, stderr=subprocess.PIPE)
         if result.returncode == 0:
-            run_result = subprocess.run("./out", stdout=subprocess.PIPE, stderr=subprocess.PIPE)
-            output = run_result.stdout.decode()
-            output += run_result.stderr.decode()
-            outputs.append(output)
+            try:
+                run_result = subprocess.run("./out", stdout=subprocess.PIPE, stderr=subprocess.PIPE, timeout=5.0)
+                output = run_result.stdout.decode()
+                output += run_result.stderr.decode()
+                output += "Exit Code {}".format(run_result.returncode)
+                outputs.append(output)
+            except subprocess.TimeoutExpired:
+                outputs.append("Timeout")
         else:
             outputs.append("Compile Error")
     all_same = all(x == outputs[0] for x in outputs)

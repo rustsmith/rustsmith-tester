@@ -30,6 +30,7 @@ class DockerClient:
                     self.client.containers.run(
                         image=f"rustsmith-tester-{version}",
                         detach=True,
+                        restart_policy={"Name": "always"},
                         name=f"rustsmith-tester-{version}-{i + 1}",
                         labels=[CONTAINER_LABEL],
                     )
