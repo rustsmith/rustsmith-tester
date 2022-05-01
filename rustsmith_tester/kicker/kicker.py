@@ -1,14 +1,14 @@
 import argparse
 
-from rustsmith_tester.conifg import config
+from rustsmith_tester.config import config
 from rustsmith_tester.kicker.docker_client import DockerClient
 
 parser = argparse.ArgumentParser(description="Start and stop workers in docker containers")
 parser.add_argument("command", type=str, help="Command to kicker (start, stop)")
 
 args = parser.parse_args()
-docker = DockerClient(config)
-versions = list(config.keys())
+docker = DockerClient(config["versions"])
+versions = list(config["versions"].keys())
 
 if args.command == "start":
     docker.start_containers()

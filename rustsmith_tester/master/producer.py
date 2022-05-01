@@ -2,10 +2,10 @@ import signal
 
 from beanstalk import Beanstalk
 from generator import Generator
-from rustsmith_tester.conifg import config
+from rustsmith_tester.config import config
 
-beanstalk = Beanstalk(list(config.keys()))
-generator = Generator("/Users/mayank/Documents/RustSmith/run/rustsmith")
+beanstalk = Beanstalk(list(config["versions"].keys()))
+generator = Generator(config["exec_path"])
 
 beanstalk.start()
 
