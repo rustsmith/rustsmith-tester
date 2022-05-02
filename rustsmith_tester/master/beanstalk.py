@@ -32,7 +32,6 @@ class Beanstalk:
                     restart_policy={"Name": "always"},
                     detach=True,
                     name=f"rustsmith-tester-beanstalkd",
-                    labels=[CONTAINER_LABEL],
                     ports={"11300/tcp": 11300, "11300/udp": 11300},
                 )
                 halo.succeed()
