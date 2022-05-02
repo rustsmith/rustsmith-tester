@@ -1,3 +1,4 @@
+import time
 from typing import Optional, List
 
 import greenstalk
@@ -6,7 +7,7 @@ import greenstalk
 class Beanstalk:
     def __init__(self, tube: str):
         self.tube = tube
-        self.client = greenstalk.Client(("host.docker.internal", 11300))
+        self.client = greenstalk.Client(("127.0.0.1", 11300))
         self.client.watch(tube)
         print("Connected to beanstalk instance")
 
@@ -16,7 +17,11 @@ class Beanstalk:
 
     def poll(self) -> greenstalk.Job:
         self.client.use(self.tube)
-        return self.client.reserve()
+        while True:
+            try:
+                return self.client.reserve(5)
+            except:
+                time.sleep(1)
 
     def delete(self, job: greenstalk.Job):
         self.client.delete(job)
