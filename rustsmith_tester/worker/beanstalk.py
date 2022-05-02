@@ -31,7 +31,7 @@ class Beanstalk:
             print("Could not delete. Moving on...")
 
     def submit_bug(self, file: str, version: str, outputs: List[str]):
-        self.client.use(f"bugs-{self.tube}")
+        self.client.use("bugs-{}".format(self.tube))
         file += "\nRUST COMPILER VERSION {}\n".format(version)
         file += str(outputs)
         self.client.put(file)
