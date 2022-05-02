@@ -1,6 +1,7 @@
 import os
 import signal
 import subprocess
+import time
 
 from beanstalk import Beanstalk
 
@@ -44,6 +45,7 @@ while True:
         print("BUG FOUND!")
         print(str(job.body))
         beanstalk.submit_bug(str(job.body), rustc_version, outputs)
+        time.sleep(1)
     beanstalk.delete(job)
     files_processed += 1
     print("Files processed {}".format(files_processed))

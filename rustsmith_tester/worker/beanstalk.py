@@ -1,5 +1,5 @@
 import time
-from typing import Optional, List
+from typing import List
 
 import greenstalk
 
@@ -24,10 +24,15 @@ class Beanstalk:
                 time.sleep(1)
 
     def delete(self, job: greenstalk.Job):
-        self.client.delete(job)
+        try:
+            self.client.use(self.tube)
+            self.client.delete(job)
+        except:
+            print("Could not delete. Moving on...")
 
     def submit_bug(self, file: str, version: str, outputs: List[str]):
-        self.client.use("bugs")
+        self.client.use(f"bugs-{self.tube}")
         file += "\nRUST COMPILER VERSION {}\n".format(version)
         file += str(outputs)
         self.client.put(file)
+        self.client.use(self.tube)
