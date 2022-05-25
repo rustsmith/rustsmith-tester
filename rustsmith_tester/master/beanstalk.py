@@ -1,3 +1,5 @@
+import dataclasses
+import json
 import subprocess
 import threading
 from time import sleep
@@ -8,6 +10,7 @@ import docker
 from halo import Halo
 
 from rustsmith_tester.kicker.docker_client import CONTAINER_LABEL
+from rustsmith_tester.master.generator import RustSmithOutput
 from rustsmith_tester.master.utils import is_port_in_use
 
 
@@ -47,12 +50,12 @@ class Beanstalk:
             self.client.close()
             halo.succeed()
 
-    def put_file_in_tube(self, file: bytes, tube: str):
+    def put_file_in_tube(self, rustsmith_output: RustSmithOutput, tube: str):
         self.client.use(tube)
-        self.client.put(file)
+        self.client.put(json.dumps(dataclasses.asdict(rustsmith_output)))
 
-    def add_file_to_queue(self, file: bytes):
+    def add_file_to_queue(self, rustsmith_output: RustSmithOutput):
         self.put_lock.acquire()
         for tube in self.tubes:
-            self.put_file_in_tube(file, tube)
+            self.put_file_in_tube(rustsmith_output, tube)
         self.put_lock.release()

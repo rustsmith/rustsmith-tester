@@ -19,7 +19,7 @@ signal.signal(signal.SIGINT, handler)
 
 files_generated = 0
 while True:
-    file = generator.generate()
+    rustsmith_output = generator.generate()
     files_generated += 1
     print(f"Files generated: {files_generated}", end="\r")
-    beanstalk.add_file_to_queue(file)
+    beanstalk.add_file_to_queue(rustsmith_output)

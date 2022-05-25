@@ -12,7 +12,7 @@ def get_files_from_bug_tube(version: str):
     tube_name = f"bugs-{version}"
     client.use(tube_name)
     client.watch(tube_name)
-    bug_files_total = client.stats_tube(tube_name)['current-jobs-ready']
+    bug_files_total = client.stats_tube(tube_name)["current-jobs-ready"]
     for i in range(bug_files_total):
         file_name = f"{tube_name}-{uuid.uuid4()}.txt"
         print("Retrieving job...")
