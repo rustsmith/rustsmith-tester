@@ -5,6 +5,8 @@ import time
 import json
 from dataclasses import dataclass
 
+from sanitize_filename import sanitize
+
 from beanstalk import Beanstalk
 
 
@@ -15,7 +17,7 @@ class RustSmithOutput:
 
 
 rustc_version = os.environ["RUSTC_VERSION"]
-beanstalk = Beanstalk(rustc_version)
+beanstalk = Beanstalk(sanitize(rustc_version))
 
 
 def handler(signo, frame):
