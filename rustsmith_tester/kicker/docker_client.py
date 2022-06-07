@@ -32,7 +32,7 @@ class DockerClient:
                         detach=True,
                         network_mode="host",
                         restart_policy={"Name": "always"},
-                        name=f"rustsmith-tester-{version}-{i + 1}",
+                        name=f"rustsmith-tester-{''.join(version.split(':'))}-{i + 1}",
                         labels=[CONTAINER_LABEL],
                     )
                     halo.text = f"Running container for version {version} [{i + 1}/{count}]"
