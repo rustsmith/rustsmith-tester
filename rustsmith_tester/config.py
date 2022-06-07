@@ -1,4 +1,4 @@
 config = {
     "exec_path": "/Users/mayank/Documents/RustSmith/run/rustsmith",
-    "versions": {"1.28": 3, "1.40": 3, "1.56": 3, "latest": 3},
+    "versions": {"rust:1.56": 2, "rust:latest": 2, "rustlang/rust:nightly": 2},
 }
