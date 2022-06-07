@@ -32,8 +32,7 @@ files_processed = 0
 while True:
     job = beanstalk.poll()
     job_as_dict = json.loads(str(job.body))
-    rustsmith_output = RustSmithOutput(code=job_as_dict["code"],
-                                       inputs=job_as_dict["inputs"])
+    rustsmith_output = RustSmithOutput(code=job_as_dict["code"], inputs=job_as_dict["inputs"])
     with open("temp.rs", "w") as temp_file:
         temp_file.write(rustsmith_output.code)
     optimization_flags = ["0", "1", "2", "3", "s", "z"]

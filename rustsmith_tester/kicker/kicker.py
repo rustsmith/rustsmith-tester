@@ -8,7 +8,6 @@ parser.add_argument("command", type=str, help="Command to kicker (start, stop)")
 
 args = parser.parse_args()
 docker = DockerClient(config["versions"])
-versions = list(config["versions"].keys())
 
 if args.command == "start":
     docker.start_containers()

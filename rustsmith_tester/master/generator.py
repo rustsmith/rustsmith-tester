@@ -16,9 +16,9 @@ class Generator:
     def generate(self) -> Optional[RustSmithOutput]:
         run_result = subprocess.run(f"{self.exec_path} -p".split(" "), stdout=subprocess.PIPE)
         if run_result.returncode == 0:
-            stdout = str(run_result.stdout, 'utf-8').strip('\'')
+            stdout = str(run_result.stdout, "utf-8").strip("'")
             # Last line of the output are the inputs to pass in when executing binary
-            code = stdout[:stdout.rfind('\n')]
+            code = stdout[: stdout.rfind("\n")]
             inputs = stdout.split("\n")[-1]
             return RustSmithOutput(code, inputs)
         else:
