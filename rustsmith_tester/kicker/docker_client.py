@@ -3,10 +3,11 @@ from typing import Dict
 
 import docker
 from halo import Halo
-from sanitize_filename import sanitize
 
 CONTAINER_LABEL = "rustsmith-worker"
 
+def sanitize(s):
+    return "".join(x for x in s if x.isalnum())
 
 class DockerClient:
     config: Dict[str, int]

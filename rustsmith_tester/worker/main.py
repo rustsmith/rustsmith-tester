@@ -5,9 +5,11 @@ import time
 import json
 from dataclasses import dataclass
 
-from sanitize_filename import sanitize
-
 from beanstalk import Beanstalk
+
+
+def sanitize(s):
+    return "".join(x for x in s if x.isalnum())
 
 
 @dataclass

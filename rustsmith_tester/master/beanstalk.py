@@ -7,11 +7,12 @@ from typing import List, Optional
 import docker
 import greenstalk
 from halo import Halo
-from sanitize_filename import sanitize
 
 from rustsmith_tester.master.generator import RustSmithOutput
 from rustsmith_tester.master.utils import is_port_in_use
 
+def sanitize(s):
+    return "".join(x for x in s if x.isalnum())
 
 class Beanstalk:
     tubes: List[str]
